@@ -79,28 +79,21 @@ let cambioIndicadores = ()=>{
           mensaje_tiempo: 'que ayer'
         }
       ]
-    let [ cambio1, cambio2, cambio3, cambio4 ] = cambios;
-    let {valor_previo: valor_previo1, valor_actual: valor_actual1, mensaje_tiempo: mensaje_tiempo1} = cambio1;
-    let {valor_previo: valor_previo2, valor_actual: valor_actual2, mensaje_tiempo: mensaje_tiempo2} = cambio2;
-    let {valor_previo: valor_previo3, valor_actual: valor_actual3, mensaje_tiempo: mensaje_tiempo3} = cambio3;
-    let {valor_previo: valor_previo4, valor_actual: valor_actual4, mensaje_tiempo: mensaje_tiempo4} = cambio4;
+      
+     
+    let list = document.getElementsByClassName('card-footer p-3');
+    let cont =0;
+    for (let element of cambios){
+      crecimientoMes = (element.valor_previo-element.valor_actual)/element.valor_previo*100;
+      crecimientoMesround=Math.round(crecimientoMes);
+      let mensajeCrec= element.mensaje_tiempo;
+      let clase = crecimientoMesround > 0 ? 'text-success' : 'text-danger';
+      let descripcion = `<p class="mb-0"><span class="text-sm ${clase} font-weight-bolder"> ${crecimientoMesround} </span> ${mensajeCrec} </p>`;
+      list[cont].innerHTML = descripcion;
+      cont=cont+1;
     
-    let porcentaje_cambios = (valor_actual,valor_previo)=> (valor_actual-valor_previo)*100/valor_previo
-    
-    let clase_cambio =(porcentaje) =>{
-        let clase = porcentaje >=0 ? 'text success' : 'text-danger';
-        return clase;
     }
-    let mensaje1 = `<p class="mb-0"><span class="text-sm ${clase_cambio(porcentaje_cambios(valor_actual1,valor_previo1))} font-weight-bolder"> ${porcentaje_cambios(valor_actual1,valor_actual1)} </span> ${mensaje_tiempo1} </p>`;
-    let mensaje2 = `<p class="mb-0"><span class="text-sm ${clase_cambio(porcentaje_cambios(valor_actual2,valor_previo2))} font-weight-bolder"> ${porcentaje_cambios(valor_actual2,valor_actual2)} </span> ${mensaje_tiempo2} </p>`;
-    let mensaje3 = `<p class="mb-0"><span class="text-sm ${clase_cambio(porcentaje_cambios(valor_actual3,valor_previo3))} font-weight-bolder"> ${porcentaje_cambios(valor_actual3,valor_actual3)} </span> ${mensaje_tiempo3} </p>`;
-    let mensaje4 = `<p class="mb-0"><span class="text-sm ${clase_cambio(porcentaje_cambios(valor_actual4,valor_previo4))} font-weight-bolder"> ${porcentaje_cambios(valor_actual4,valor_actual4)} </span> ${mensaje_tiempo4} </p>`;
-    
-    let listOfFooters= document.getElementsByClassName('card-footer p-3');
-    listOfFooters[0].innerHTML=mensaje1;
-    listOfFooters[1].innerHTML=mensaje2;
-    listOfFooters[2].innerHTML=mensaje3;
-    listOfFooters[3].innerHTML=mensaje4;
+
 }
 modifyText();
 runScripts();
